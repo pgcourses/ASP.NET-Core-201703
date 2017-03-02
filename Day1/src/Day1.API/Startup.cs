@@ -39,11 +39,20 @@ namespace Day1.API
             //    await context.Response.WriteAsync("Hello World!");
             //});
 
+
+            //Megmondjuk, hogy a futtatási környezet használja az MVC környezetet (routing, stb,)
+            //app.UseMvc(); //API esetén elég ez, mert ott Attributumokkal címezzük a routingot, de a webalkalmazásnál már névkonvenció alapú
+
+            //app.UseMvc(
+            //    routeBuilder => {
+            //        routeBuilder.MapRoute(
+            //            name: "Default", 
+            //            template: "{controller}/{action}/{id?}",
+            //            defaults: new { controller="Home", action="Index" });
+            //});
+
             //WebAlkalmazások routingja ilyen például
-            //app.UseMvcWithDefaultRoute();
-            
-            //Megmondjuk, hogy a futtatűsi környezet használja az MVC környezetet (routing, stb,)
-            app.UseMvc();
+            app.UseMvcWithDefaultRoute();
         }
     }
 }

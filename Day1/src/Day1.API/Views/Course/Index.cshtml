@@ -1,0 +1,10 @@
+﻿@using Day1.API.Models
+@model IEnumerable<CourseModel>
+
+@foreach (var course in Model)
+{
+    <div>
+        <h2>@course.Name</h2>
+        <p>@course.Info</p>
+    </div>
+}
