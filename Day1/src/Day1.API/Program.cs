@@ -17,6 +17,10 @@ using Microsoft.AspNetCore.Hosting;
 ///   (Request pipeline)
 ///   
 /// - Beépített HTTP szerver: Kestrel
+/// 
+/// - MVC: Model-View-Controller
+/// 
+/// 
 /// </summary>
 
 namespace Day1.API
