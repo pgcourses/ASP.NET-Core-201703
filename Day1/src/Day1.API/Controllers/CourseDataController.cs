@@ -25,7 +25,7 @@ namespace Day1.API.Controllers
         //GET/POST/PUT/PATCH/DELETE stb.
 
         //[HttpGet("api/courses")]
-        [HttpGet] //ha a controlleren megadtuk az elérést, akkor itt már csak a http methodot kell megadni.
+        //[HttpGet] //ha a controlleren megadtuk az elérést, akkor itt már csak a http methodot kell megadni.
         public IActionResult GetCourses()
         {
             //Ez egy rossz megoldás, hiszen a környezetünket saját magunk állítjuk elő
@@ -38,11 +38,18 @@ namespace Day1.API.Controllers
 
         }
 
-
         //[HttpPost]
         //public IActionResult AddCourse(/*CourseInputModel model*/)
         //{
         //    return new JsonResult(new { Name = "Ez a postba jött" });
+        //}
+
+
+        //Ha több azonos metódust akarunk címezni routinggal, akkor mindegyik action-re kell attributum
+        //[HttpGet("api/courses/{id}")]
+        //public IActionResult GetCourse(int id)
+        //{
+        //    return new JsonResult(new { Name = $"Ez a get-be érkezett: {id}" });
         //}
 
     }
