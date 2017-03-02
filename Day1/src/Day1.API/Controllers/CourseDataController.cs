@@ -3,13 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Day1.API.Repositories;
 
 namespace Day1.API.Controllers
 {
-    //[Route("api/courses")] //itt is meg tudjuk a route címet adni
-    [Route("api/[controller]")]
+    [Route("api/courses")] //itt is meg tudjuk a route címet adni
+    //[Route("api/[controller]")] //Így pedig a controller nevét használja a "Controller postfix nélkül"
     public class CourseDataController : Controller
     {
+        private readonly ICourseRepository _repository;
+
+        public CourseDataController(ICourseRepository courseRepository)
+        {
+            if (courseRepository == null)
+            { throw new ArgumentNullException(nameof(courseRepository)); }
+
+            _repository = courseRepository;
+        }
+
         //Egy http kérés a következők egyike:
         //GET/POST/PUT/PATCH/DELETE stb.
 
@@ -17,16 +28,22 @@ namespace Day1.API.Controllers
         [HttpGet] //ha a controlleren megadtuk az elérést, akkor itt már csak a http methodot kell megadni.
         public IActionResult GetCourses()
         {
-            return new JsonResult(new List<object>
-            {
-                new { id=1, Name="Certified Information Systems Security Pro - CISSP", Info="Épp most ért véget" },
-                new { id=2, Name="Borkollégium mesterkurzus: Tokaj Y Generáció", Info="Épp most ért véget" },
-                new { id=3, Name="Titkosítási ABC", Info="Épp most ért véget" },
-                new { id=4, Name="Windows Stack High Availability", Info="Épp most ért véget" },
-                new { id=5, Name="Xamarin-fejlesztés mobileszközökre", Info="Folyamatban..." },
-                new { id=6, Name="Vállalkozóiskola", Info="Ma kezdődik (14:00)" },
-                new { id=7, Name="ASP.NET Core szerveroldali fejlesztés", Info="Ma kezdődik (13:00)" }
-            });
+            //Ez egy rossz megoldás, hiszen a környezetünket saját magunk állítjuk elő
+            //ezzel a függőségünket ide láncoljuk. Függünk a CourseMockRepository-tól
+            //var repo = new CourseMockRepository();
+            //return new JsonResult(repo.GetCourses());
+
+            //Ehelyett jobb megoldás, ha a függőséget kívülről kapjuk: DependencyInjection
+            return new JsonResult(_repository.GetCourses());
+
         }
+
+
+        //[HttpPost]
+        //public IActionResult AddCourse(/*CourseInputModel model*/)
+        //{
+        //    return new JsonResult(new { Name = "Ez a postba jött" });
+        //}
+
     }
 }

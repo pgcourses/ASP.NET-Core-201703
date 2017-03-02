@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Day1.API.Repositories;
 
 namespace Day1.API
 {
@@ -16,6 +17,7 @@ namespace Day1.API
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<ICourseRepository, CourseMockRepository>();
             //Felvesszük a szervizek közé az Mvc-t, de ezzel még nem tudjuk használni
             services.AddMvc();
         }
