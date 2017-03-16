@@ -1,0 +1,23 @@
+﻿@*RAZOR nyelven írjuk a nézetet*@
+@model IEnumerable<FamilyPhotos.Models.PhotoModel>
+
+@foreach (var photo in Model)
+{
+    <div>
+        @*Az Url.Action összeköttetésben van a Routing-gal, így tudja, hogy milyen url kell
+        a routingnak, hogy a kérés a jó helyre eltaláljon.*@
+        @*Mert írhatnám direktben ezt is:
+        <image src="/Photo/GetImage?photoId=@(photo.Id.ToString())" />
+        <image src="/Photo/GetImage/@(photo.Id.ToString())" />*@
+        @if (photo.Picture != null)
+        {
+        <image src="@Url.Action("GetImage", new { photoId = photo.Id })" />
+        }
+        <div>@photo.Title</div>
+    </div>
+
+}
+
+<div>
+    @Html.ActionLink("Új fotó létrehozása", "Create")
+</div>
