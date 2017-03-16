@@ -1,0 +1,18 @@
+﻿@model FamilyPhotos.Models.PhotoModel
+
+<h2>Új kép létrehozása</h2>
+
+@using (Html.BeginForm())
+{ 
+<div>
+    @Html.LabelFor(m => m.Title)
+    @Html.EditorFor(m=>m.Title)
+</div>
+<div>
+    @Html.LabelFor(m => m.Description)
+    @Html.EditorFor(m => m.Description)
+</div>
+<div>
+    <input type="submit" value="Létrehozás" />
+</div>
+}

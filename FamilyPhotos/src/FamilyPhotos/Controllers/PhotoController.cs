@@ -1,4 +1,5 @@
-﻿using FamilyPhotos.Repository;
+﻿using FamilyPhotos.Models;
+using FamilyPhotos.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,20 @@ namespace FamilyPhotos.Controllers
             }
 
             return File(pic.Picture, "image/jpeg"); //TODO: lecserélni értelmes contenttype-ra
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View(new PhotoModel());
+        }
+
+        [HttpPost]
+        //public IActionResult Create(string Title, string Description)
+        public IActionResult Create(PhotoModel model) //Itt az MVC modelbindere a bejövő paramétereket egyezteti a várt osztály propertyjeivel és ki is tölti
+        {
+            repository.AddPhoto(model);
+            return View(model);
         }
     }
 }
