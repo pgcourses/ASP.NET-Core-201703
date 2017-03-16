@@ -27,6 +27,7 @@ namespace FamilyPhotos.Repository
             return data.SingleOrDefault(x => x.Id == photoId);
         }
 
+        //figyelem, csak DEMO, ezt ki fogjuk alaposan egészíteni még!!!!
         public void AddPhoto(PhotoModel model)
         {
             data.Add(model);

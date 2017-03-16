@@ -2,8 +2,8 @@
 
 <h2>Új kép létrehozása</h2>
 
-@using (Html.BeginForm())
-{ 
+@using (Html.BeginForm("Create", "Photo", FormMethod.Post, new { enctype = "multipart/form-data"}))
+{
 <div>
     @Html.LabelFor(m => m.Title)
     @Html.EditorFor(m=>m.Title)
@@ -11,6 +11,10 @@
 <div>
     @Html.LabelFor(m => m.Description)
     @Html.EditorFor(m => m.Description)
+</div>
+<div>
+    @Html.LabelFor(m=>m.Picture)
+    <input type="file" name="PictureFromBrowser" />
 </div>
 <div>
     <input type="submit" value="Létrehozás" />
