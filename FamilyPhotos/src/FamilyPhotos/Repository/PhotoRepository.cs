@@ -14,6 +14,7 @@ namespace FamilyPhotos.Repository
         //Figyelem: ez csak fejlesztői teszthez jó, nem feltétlenül szálbiztos a kódunk, amit írunk
         //Thread safe: https://en.wikipedia.org/wiki/Thread_safety
         private List<PhotoModel> data = new List<PhotoModel>();
+        int id = 0;
 
         public IEnumerable<PhotoModel> GetAllPhotos()
         {
@@ -30,6 +31,7 @@ namespace FamilyPhotos.Repository
         //figyelem, csak DEMO, ezt ki fogjuk alaposan egészíteni még!!!!
         public void AddPhoto(PhotoModel model)
         {
+            model.Id = id++;
             data.Add(model);
         }
     }

@@ -1,5 +1,6 @@
 ﻿using FamilyPhotos.Models;
 using FamilyPhotos.Repository;
+using FamilyPhotos.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -41,12 +42,12 @@ namespace FamilyPhotos.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View(new PhotoModel());
+            return View(new PhotoViewModel());
         }
 
         [HttpPost]
         //public IActionResult Create(string Title, string Description)
-        public IActionResult Create(PhotoModel model) //Itt az MVC modelbindere a bejövő paramétereket egyezteti a várt osztály propertyjeivel és ki is tölti
+        public IActionResult Create(PhotoViewModel viewModel) //Itt az MVC modelbindere a bejövő paramétereket egyezteti a várt osztály propertyjeivel és ki is tölti
         {
             //Azon a Controller/Action-ön, ami model-t fogad, kötelező a validálás és eredményének az ellenőrzése
             //méghozzá a ModelState állapotának ellenőrzése, itt jelenik meg a validálás végeredménye
@@ -56,21 +57,28 @@ namespace FamilyPhotos.Controllers
             {
                 //A View-t fel kell készíteni a hibainformációk
                 //megjelenítésére
-                return View(model);
+                return View(viewModel);
             }
+
+            //El kell végezni a ViewModel=>Model transzformációt
+            ////////////////////////////////////////////////////
+
+            var model = new PhotoModel();
+
+            model.Title = viewModel.Title;
+            model.Description = viewModel.Description;
+            model.ContentType = viewModel.PictureFromBrowser.ContentType;
 
             //Átírni az adatokat a model.PictureFromBrowser --> model.Picture
             //Készítünk egy fogadó byte tömböt, amiben a kép elfér
-            model.Picture = new byte[model.PictureFromBrowser.Length];
+            model.Picture = new byte[viewModel.PictureFromBrowser.Length];
             
             //Megnyitjuk és átmásoljuk a feltöltött állomány stream-jét a tömbbe
-            using (var stream = model.PictureFromBrowser.OpenReadStream())
+            using (var stream = viewModel.PictureFromBrowser.OpenReadStream())
             {
                 //figyelem, ehelyett a cast helyett buffer + ciklus, ez csak DEMO
-                stream.Read(model.Picture, 0, (int)model.PictureFromBrowser.Length);
+                stream.Read(model.Picture, 0, (int)viewModel.PictureFromBrowser.Length);
             }
-
-            model.ContentType = model.PictureFromBrowser.ContentType;
 
             repository.AddPhoto(model);
 

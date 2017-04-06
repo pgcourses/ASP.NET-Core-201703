@@ -6,17 +6,23 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FamilyPhotos.Models
+namespace FamilyPhotos.ViewModel
 {
-    public class PhotoModel
+    public class PhotoViewModel
     {
         public int Id { get; set; }
 
         /// <summary>
-        /// Beépített validációk (Data Validation)
+        /// Beépített validációk
         /// 
         /// Required
+        /// Compare
+        /// EmailAddress
+        /// Phone
+        /// Range
         /// StringLength
+        /// Url
+        /// RegularExpression
         /// 
         /// + saját validálás készítése
         /// </summary>
@@ -26,13 +32,15 @@ namespace FamilyPhotos.Models
         public string Title { get; set; }
 
         [Required] //Kötelező kitölteni a mezőt
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
         /// <summary>
-        /// Ezt fogjuk majd adatbázisba menteni
+        /// Ez pedig csak a browserből történő file feltöltésre szolgál
         /// </summary>
-        public byte[] Picture { get; set; }
-
-        public string ContentType { get; set; }
+        [FormFileLengthValidation] //Ez lefedi a [Required] attributumot is
+        [ContentTypeValidation]
+        [Display(Name = "Picture")]
+        public IFormFile PictureFromBrowser { get; set; }
     }
 }
