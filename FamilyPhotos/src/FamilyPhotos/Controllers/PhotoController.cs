@@ -48,11 +48,13 @@ namespace FamilyPhotos.Controllers
         //public IActionResult Create(string Title, string Description)
         public IActionResult Create(PhotoModel model) //Itt az MVC modelbindere a bejövő paramétereket egyezteti a várt osztály propertyjeivel és ki is tölti
         {
-            //nagyon kezdetleges Adatvalidálás, ezt majd jól meg fogjuk haladni!
-            //hiányzik még pár dolog, csak DEMO
+            //Azon a Controller/Action-ön, ami model-t fogad, kötelező a validálás és eredményének az ellenőrzése
+            //méghozzá a ModelState állapotának ellenőrzése, itt jelenik meg a validálás végeredménye
 
-            if (model.PictureFromBrowser==null || model.PictureFromBrowser.Length==0)
+            if (!ModelState.IsValid || model.PictureFromBrowser.Length == 0)
             {
+                //A View-t fel kell készíteni a hibainformációk
+                //megjelenítésére
                 return View(model);
             }
 
@@ -70,7 +72,9 @@ namespace FamilyPhotos.Controllers
             model.ContentType = model.PictureFromBrowser.ContentType;
 
             repository.AddPhoto(model);
-            return View(model);
+
+            //A kép elmentése után térjen vissza az Index oldalra
+            return RedirectToAction("Index");
         }
     }
 }

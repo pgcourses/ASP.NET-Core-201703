@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EB0E4918-BEF2-4D56-BCF6-9CD492E6315A}"
 	ProjectSection(SolutionItems) = preProject
 		global.json = global.json
+		info.txt = info.txt
 	EndProjectSection
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "FamilyPhotos", "src\FamilyPhotos\FamilyPhotos.xproj", "{D0C38CD1-450B-4656-9C21-35E4A31B5944}"

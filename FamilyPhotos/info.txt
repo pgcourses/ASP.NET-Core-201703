@@ -1,0 +1,36 @@
+1. Modellek szerepe az MVC alkalmazásban
+
+1. a Megjelenítés során (Szerver->Böngészõ)
+- A modell-be összegyûjtjük azokat az információkat, amiket meg szeretnénk jeleníteni. 
+  Ezt végzi a kontroller.
+- Az összegyûjtött adatok a modell-be zárva kerülnek a nézet generátorhoz, 
+  amelyik generálja a html-t, közben felhasználja a model adatokat.
+
+2. Az adatbevitel során (Böngészõ->szerver)
+- A böngészõ információt küld a szerver felé
+  - query string
+  - header
+  - HTML Form 
+Egységes ezekben, hogy név/érték párokba van szervezve az információ
+
+- A szerver megkapja ezt az információt
+- A ModelBinder 
+	- példányosít a controller/action paramétereinek megfelelõ típusokat
+	- Megpróbálja öszerendelni a várakozásainkat a kapott kulcs/érték halmaz egyes elemeivel
+	  - primitív típusok esetén a paraméter neve
+	  - DTO (Data transfer Object) esetén a property-k neve az összerednelés alapja
+
+	- adatbevitel validációja: ezt a ModelBinder elvégzi a megadott ValidationAttribute-ok alapján, az eredményt 
+	  a ControllerBase.ModelState osztály tartalmazza
+
+    - Ha a modellünk érvénytelen, akkor visszaadjuk a browsernek a beviteli oldalt és a hibainformációkat
+
+- Ha érvényes, akkor a modellt feldolgozzuk (elmentjük, módosítunk amit kell, stb.)
+
+
+
+
+
+
+
+

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,8 +11,25 @@ namespace FamilyPhotos.Models
     {
         public int Id { get; set; }
 
+        /// <summary>
+        /// Beépített validációk
+        /// 
+        /// Required
+        /// Compare
+        /// EmailAddress
+        /// Phone
+        /// Range
+        /// StringLength
+        /// Url
+        /// RegularExpression
+        /// 
+        /// + saját validálás készítése
+        /// </summary>
+
+        [Required] //Kötelező kitölteni a mezőt
         public string Title { get; set; }
 
+        [Required] //Kötelező kitölteni a mezőt
         public string Description { get; set; }
 
         /// <summary>
@@ -22,6 +40,7 @@ namespace FamilyPhotos.Models
         /// <summary>
         /// Ez pedig csak a browserből történő file feltöltésre szolgál
         /// </summary>
+        [Required] //Kötelező kitölteni a mezőt
         public IFormFile PictureFromBrowser { get; set; }
 
         //MVC5/ASP.NET 4.6-ban nincs IFormFile, helyette ez van
