@@ -42,6 +42,7 @@ namespace FamilyPhotos.Models
         /// Ez pedig csak a browserből történő file feltöltésre szolgál
         /// </summary>
         [FormFileLengthValidation] //Ez lefedi a [Required] attributumot is
+        [ContentTypeValidation]
         public IFormFile PictureFromBrowser { get; set; }
 
         //MVC5/ASP.NET 4.6-ban nincs IFormFile, helyette ez van
