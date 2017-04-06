@@ -18,7 +18,7 @@ Egységes ezekben, hogy név/érték párokba van szervezve az információ
 	- példányosít a controller/action paramétereinek megfelelõ típusokat
 	- Megpróbálja öszerendelni a várakozásainkat a kapott kulcs/érték halmaz egyes elemeivel
 	  - primitív típusok esetén a paraméter neve
-	  - DTO (Data transfer Object) esetén a property-k neve az összerednelés alapja
+	  - DTO (Data transfer Object) esetén a property-k neve az összerendelés alapja
 
 	- adatbevitel validációja: ezt a ModelBinder elvégzi a megadott ValidationAttribute-ok alapján, az eredményt 
 	  a ControllerBase.ModelState osztály tartalmazza
@@ -26,6 +26,20 @@ Egységes ezekben, hogy név/érték párokba van szervezve az információ
     - Ha a modellünk érvénytelen, akkor visszaadjuk a browsernek a beviteli oldalt és a hibainformációkat
 
 - Ha érvényes, akkor a modellt feldolgozzuk (elmentjük, módosítunk amit kell, stb.)
+
+- A saját validációt is érdemes Attributum-ként implementálni, így a feladat egy ponton koncentrálódik,
+  ráadásul újrafelhasználható is lesz a kód. 
+
+- Model/Viewmodel szétválasztás
+  
+  megjelenítés <--(viewModel) <----(transzformáció) <---(model) <----(repository) <----(adattárolás)
+
+  A transzformáció polgári neve: automapper
+
+  Az üzembeállításához ezek kellenek:
+
+    - Profile, a konstruktorban van a transzfomációs definíció
+	- ezt be kell tölteni
 
 
 

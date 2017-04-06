@@ -60,25 +60,24 @@ namespace FamilyPhotos.Controllers
                 return View(viewModel);
             }
 
+            //több profile betöltése
+            //var autoMapperCfg = new AutoMapper.MapperConfiguration(
+            //    cfg =>
+            //    {
+            //        cfg.AddProfile(new PhotoProfile());
+            //        cfg.AddProfile(new PhotoProfile());
+            //        cfg.AddProfile(new PhotoProfile());
+            //        cfg.AddProfile(new PhotoProfile());
+            //        cfg.AddProfile(new PhotoProfile());
+            //    });
+
+            var autoMapperCfg = new AutoMapper.MapperConfiguration(cfg=>cfg.AddProfile(new PhotoProfile()));
+            var mapper = autoMapperCfg.CreateMapper();
+
             //El kell végezni a ViewModel=>Model transzformációt
             ////////////////////////////////////////////////////
+            var model = mapper.Map<PhotoModel>(viewModel);
 
-            var model = new PhotoModel();
-
-            model.Title = viewModel.Title;
-            model.Description = viewModel.Description;
-            model.ContentType = viewModel.PictureFromBrowser.ContentType;
-
-            //Átírni az adatokat a model.PictureFromBrowser --> model.Picture
-            //Készítünk egy fogadó byte tömböt, amiben a kép elfér
-            model.Picture = new byte[viewModel.PictureFromBrowser.Length];
-            
-            //Megnyitjuk és átmásoljuk a feltöltött állomány stream-jét a tömbbe
-            using (var stream = viewModel.PictureFromBrowser.OpenReadStream())
-            {
-                //figyelem, ehelyett a cast helyett buffer + ciklus, ez csak DEMO
-                stream.Read(model.Picture, 0, (int)viewModel.PictureFromBrowser.Length);
-            }
 
             repository.AddPhoto(model);
 
