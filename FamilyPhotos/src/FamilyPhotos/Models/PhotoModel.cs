@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FamilyPhotos.ViewModel.Validation;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -40,7 +41,7 @@ namespace FamilyPhotos.Models
         /// <summary>
         /// Ez pedig csak a browserből történő file feltöltésre szolgál
         /// </summary>
-        [Required] //Kötelező kitölteni a mezőt
+        [FormFileLengthValidation] //Ez lefedi a [Required] attributumot is
         public IFormFile PictureFromBrowser { get; set; }
 
         //MVC5/ASP.NET 4.6-ban nincs IFormFile, helyette ez van

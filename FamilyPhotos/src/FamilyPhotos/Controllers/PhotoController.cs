@@ -50,8 +50,9 @@ namespace FamilyPhotos.Controllers
         {
             //Azon a Controller/Action-ön, ami model-t fogad, kötelező a validálás és eredményének az ellenőrzése
             //méghozzá a ModelState állapotának ellenőrzése, itt jelenik meg a validálás végeredménye
+            //+ha tudjuk, akkor ValidationAttrubute-okon keresztül ellenőrizzünk
 
-            if (!ModelState.IsValid || model.PictureFromBrowser.Length == 0)
+            if (!ModelState.IsValid)
             {
                 //A View-t fel kell készíteni a hibainformációk
                 //megjelenítésére
