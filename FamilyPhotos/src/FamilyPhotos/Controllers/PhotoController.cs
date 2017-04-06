@@ -67,6 +67,21 @@ namespace FamilyPhotos.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var model = repository.GetPicture(id);
+            var viewModel = mapper.Map<PhotoViewModel>(model);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(PhotoViewModel viewModel)
+        {
+            repository.DeletePhoto(viewModel.Id);
+            return RedirectToAction("Index");
+        }
+
         public FileContentResult GetImage(int photoId)
         {
             var pic = repository.GetPicture(photoId);

@@ -1,0 +1,13 @@
+﻿@model FamilyPhotos.ViewModel.PhotoViewModel
+
+<h2>Kép törlés</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.Id)
+    @Html.DisplayForModel()
+    <div>
+        <input type="submit" value="Törlés" />
+    </div>
+}
+
