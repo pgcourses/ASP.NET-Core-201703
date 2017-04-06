@@ -1,0 +1,18 @@
+﻿@model FamilyPhotos.ViewModel.PhotoViewModel
+
+@Html.ValidationSummary()
+<div>
+    @Html.LabelFor(m => m.Title)
+    @Html.EditorFor(m => m.Title)
+    @Html.ValidationMessageFor(m => m.Title)
+</div>
+<div>
+    @Html.LabelFor(m => m.Description)
+    @Html.EditorFor(m => m.Description)
+    @Html.ValidationMessageFor(m => m.Description)
+</div>
+<div>
+    @Html.LabelFor(m => m.PictureFromBrowser)
+    <input type="file" name="PictureFromBrowser" />
+    @Html.ValidationMessageFor(m => m.PictureFromBrowser)
+</div>
