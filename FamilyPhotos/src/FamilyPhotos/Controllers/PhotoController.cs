@@ -45,6 +45,28 @@ namespace FamilyPhotos.Controllers
             return View(viewModel);
         }
 
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var model = repository.GetPicture(id);
+            var viewModel = mapper.Map<PhotoViewModel>(model);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(PhotoViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            var model = mapper.Map<PhotoModel>(viewModel);
+            repository.UpdatePhoto(model);
+
+            return RedirectToAction("Index");
+        }
+
         public FileContentResult GetImage(int photoId)
         {
             var pic = repository.GetPicture(photoId);

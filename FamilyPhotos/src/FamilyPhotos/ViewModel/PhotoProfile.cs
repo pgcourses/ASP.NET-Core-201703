@@ -29,6 +29,10 @@ namespace FamilyPhotos.ViewModel
 
             CreateMap<PhotoModel, PhotoViewModel>()
                 ;
+
+            CreateMap<PhotoModel, PhotoModel>()
+                ;
+
         }
     }
 }

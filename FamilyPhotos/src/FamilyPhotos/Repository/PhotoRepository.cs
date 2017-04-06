@@ -34,5 +34,15 @@ namespace FamilyPhotos.Repository
             model.Id = id++;
             data.Add(model);
         }
+
+        public void UpdatePhoto(PhotoModel model)
+        {
+            var oldModel = data.SingleOrDefault(x => x.Id == model.Id);
+            if (oldModel!=null)
+            {
+                data.Remove(oldModel);
+                data.Add(model);
+            }
+        }
     }
 }
