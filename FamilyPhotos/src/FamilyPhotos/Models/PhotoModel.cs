@@ -28,9 +28,11 @@ namespace FamilyPhotos.Models
         /// </summary>
 
         [Required] //Kötelező kitölteni a mezőt
+        [StringLength(40)]
         public string Title { get; set; }
 
         [Required] //Kötelező kitölteni a mezőt
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
         /// <summary>
@@ -43,6 +45,7 @@ namespace FamilyPhotos.Models
         /// </summary>
         [FormFileLengthValidation] //Ez lefedi a [Required] attributumot is
         [ContentTypeValidation]
+        [Display(Name="Picture")]
         public IFormFile PictureFromBrowser { get; set; }
 
         //MVC5/ASP.NET 4.6-ban nincs IFormFile, helyette ez van
