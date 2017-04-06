@@ -16,6 +16,9 @@
         <image src="@Url.Action("GetImage", new { photoId = photo.Id })" />
         }
         <div>@photo.Title</div>
+        @Html.ActionLink("Megtekintés", "Details", new { id = photo.Id }) @*A routingnak átadjuk az id paramétert*@
+        @Html.ActionLink("Módosítás", "Edit", new { id = photo.Id })
+        @Html.ActionLink("Törlés", "Delete", new { id = photo.Id })
     </div>
 
 }

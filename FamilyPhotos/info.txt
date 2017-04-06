@@ -11,6 +11,7 @@
   - query string
   - header
   - HTML Form 
+  - Az MVC rendszer (a szerver) ehhez a Route Values-t hozzáteszi
 Egységes ezekben, hogy név/érték párokba van szervezve az információ
 
 - A szerver megkapja ezt az információt
@@ -41,6 +42,14 @@ Egységes ezekben, hogy név/érték párokba van szervezve az információ
     - Profile, a konstruktorban van a transzfomációs definíció
 	- ezt be kell tölteni
 
+Két fontos link a mai anyaghoz:
+
+Model: 
+https://docs.microsoft.com/en-us/aspnet/core/mvc/models/model-binding
+https://docs.microsoft.com/en-us/aspnet/core/mvc/models/validation
+
+View:
+https://docs.microsoft.com/en-us/aspnet/core/mvc/views/razor
 
 
 
