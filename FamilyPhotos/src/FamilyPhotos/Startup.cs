@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using FamilyPhotos.Repository;
 using FamilyPhotos.Filters;
+using FamilyPhotos.Loggers;
 
 namespace FamilyPhotos
 {
@@ -41,7 +42,7 @@ namespace FamilyPhotos
         {
             loggerFactory.AddConsole()
                          .AddDebug(LogLevel.Trace)
-                         //.AddMyLogger()
+                         .AddMyLogger()
                          ;
 
             //Ha nem csak egyszerű státuszkóddal akarunk válaszolni, hanem 
