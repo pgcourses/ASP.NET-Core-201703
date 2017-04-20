@@ -75,10 +75,14 @@ II. És miután elindult
 I. Amíg a szerver elindul, a környezettõl függõen kezeli a hibakezelést:
 Development: magától adja a teljes hibaüzenetet, különben be kell állítani
 
-II. Alkalmazás indulása után a hibakezeléshez két eszközrendszerünk van:
-- Hibakezelési köztes rétegek használata (MiddleWare)
-- Hibaszûrõk használata (ErrorFilters)
+II. Alkalmazás indulása után a hibakezeléshez három eszközrendszerünk van:
+- visszatérési értékek és hozzájuk tartozó oldalak (app.UseStatusCodepages*)
+- Hibakezelési köztes rétegek használata (MiddleWare, ExceptionHandler) https://docs.microsoft.com/en-us/aspnet/core/fundamentals/error-handling
+- Hibaszûrõk használata (ErrorFilters) https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters
 
+ezen kívül rögzíteni kéne az utókornak, hogy mi is történt valójában
+vagyis:
+NAPLÓZÁS
 
 
 

@@ -37,5 +37,10 @@ namespace FamilyPhotos.Controllers
 
             return View(model);
         }
+
+        public IActionResult ExceptionHandler()
+        {
+            return View();
+        }
     }
 }

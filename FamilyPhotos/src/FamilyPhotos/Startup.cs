@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using FamilyPhotos.Repository;
+using FamilyPhotos.Filters;
 
 namespace FamilyPhotos
 {
@@ -29,7 +30,10 @@ namespace FamilyPhotos
 
             services.AddSingleton(mapper); //innentől kérhetem a Controller paraméterlistájában
 
-            services.AddMvc();
+            services.AddMvc(o =>
+            {
+                o.Filters.Add(new MyExceptionFilter());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,7 +46,6 @@ namespace FamilyPhotos
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseDeveloperExceptionPage();
             //Ha nem csak egyszerű státuszkóddal akarunk válaszolni, hanem 
             //szeretnénk egyszerű információkat adni, akkor például így tudunk
             //400-599 közötti kódokhoz megoldás
@@ -73,6 +76,11 @@ namespace FamilyPhotos
 
             //Vagy visszaküldjük újrafeldolgozásra, ekkor több információhoz is hozzáférünk
             app.UseStatusCodePagesWithReExecute("/Errors/StatusCodePagesWithReExecute", "?statusCode={0}");
+
+            //Hibakezelés saját action-nel (middleware-rel): 
+            //https://docs.microsoft.com/en-us/aspnet/core/fundamentals/error-handling
+            //app.UseExceptionHandler("/Errors"); //Ez így az /Errors/Index-re megy
+            app.UseExceptionHandler("/Errors/ExceptionHandler"); 
 
             app.UseMvcWithDefaultRoute();
 

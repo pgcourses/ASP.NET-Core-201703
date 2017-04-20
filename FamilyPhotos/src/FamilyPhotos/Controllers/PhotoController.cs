@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 
 namespace FamilyPhotos.Controllers
 {
+    [FamilyPhotos.Filters.MyExceptionFilter2(2)] //Ha a ExceptionFilterAttribute-ot származtatjuk le,
+    [FamilyPhotos.Filters.MyExceptionFilter3(Order=1)] // akkor nem kell sokat implementálni
     public class PhotoController : Controller
     {
         private PhotoRepository repository;
@@ -136,6 +138,7 @@ namespace FamilyPhotos.Controllers
             return RedirectToAction("Index");
         }
 
+        //példakód a StatusCodePage megoldásokhoz
         public IActionResult EzEgyHibasKod()
         {
             try
@@ -150,5 +153,20 @@ namespace FamilyPhotos.Controllers
                 return StatusCode(500);
             }
         }
+
+        public IActionResult EzEgyKivetel()
+        {
+            throw new Exception("Itt is van a hiba"); //Ezt a Startup.cs-ben beállított ExceptionHandler segít lekezelni.
+
+            //try
+            //{
+            //    throw new Exception("Itt is van a hiba");
+            //}
+            //catch (Exception ex)
+            //{
+            //    return RedirectToAction("Kivetel", "Errors");
+            //}
+        }
+
     }
 }
