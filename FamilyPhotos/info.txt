@@ -51,6 +51,29 @@ https://docs.microsoft.com/en-us/aspnet/core/mvc/models/validation
 View:
 https://docs.microsoft.com/en-us/aspnet/core/mvc/views/razor
 
+Megjegyzések a telemetriához és a Glimpse-hez
+
+- A Glimpse jelenleg nem mûködésre bírható, itt még mûködött: 
+http://blog.getglimpse.com/2015/11/19/installing-glimpse-v2-beta1/
+
+- a telemetriát két irányban érdemes fejleszteni:
+1. Azure Application Insights, ezt az utolsó alkalommal megnézzük
+
+2. ElasticSearch/RabbitMQ/Logstash/Kibana stack használatával: errõl a következõ ElasticSearch dióhéjban
+   tanfolyamon lesz szó: http://www.netacademia.hu/ELSfree-elastic-search--nutshell
+
+Hibakezelés
+
+A futtatási környezet lehetséges értékei (Nem case sensitive): Development, Staging, Production
+A beállításokról részletesen: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration 
+
+Két szakasza van az alkalmazás futtatásának:
+
+I. Amíg a szerver elindul és szolgáltat
+II. És miután elindult
+
+I. Amíg a szerver elindul, a környezettõl függõen kezeli a hibakezelést:
+Development: magától adja a teljes hibaüzenetet, különben be kell állítani
 
 
 

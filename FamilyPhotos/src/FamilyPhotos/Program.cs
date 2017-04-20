@@ -40,6 +40,13 @@ namespace FamilyPhotos
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
+                //Az indulás közben történő hibakezelés
+                //a hibák rögzítését így lehet elindítani:
+                //ilyenkor az alkalmazás meggpróbál elindulni,
+                //és a hibaüzenet oldalt megjeleníteni
+                .CaptureStartupErrors(true) //alapértelmezésben false, kivéve a Development környezetet
+                //Ahhoz, hogy részletes hibaüzenetet kapjunk, ezt is be kell állítani
+                .UseSetting("detailedErrors","true") //alapértelmezésben false, kivéve a Development környezetet
                 .UseStartup<Startup>()
                 .Build();
 
