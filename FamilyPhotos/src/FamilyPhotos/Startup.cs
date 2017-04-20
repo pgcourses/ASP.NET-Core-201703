@@ -17,7 +17,8 @@ namespace FamilyPhotos
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            throw new Exception("ez itt egy hiba");
+            //Ha tesztelni akarjuk az indulás közbeni hibakezelést, akkor ezt például így tehetjük meg
+            //throw new Exception("ez itt egy hiba");
 
             //Azért, hogy minden egyes kérésnél ugyanahhoz a repositoryhoz jussunk, Singleton-ként kell regisztrálnunk.
             //A C# Singleton mintáról részletesen: http://csharpindepth.com/articles/general/singleton.aspx
@@ -41,8 +42,46 @@ namespace FamilyPhotos
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseDeveloperExceptionPage();
+            //Ha nem csak egyszerű státuszkóddal akarunk válaszolni, hanem 
+            //szeretnénk egyszerű információkat adni, akkor például így tudunk
+            //400-599 közötti kódokhoz megoldás
+            //de csak, ha a például a kivételt előtte kezeltük és a státuszkóddal térünk vissza
+            //az action-ből
+
+            //alapértelmezés
+            //app.UseStatusCodePages();
+
+            //Különböző beállítási lehetőségek
+            //app.UseStatusCodePages("text/plain", "Ez egy hibás kérés, a kód: {0}");
+            //app.UseStatusCodePages( async context => 
+            //{
+            //    context.HttpContext
+            //           .Response
+            //           .ContentType = "text/plain";
+
+            //    await context.HttpContext
+            //                 .Response
+            //                 .WriteAsync($"Ez a UseStatusCodePages delegate settings, a kód pedig: {context.HttpContext.Response.StatusCode}");
+            //});
+            //és még rengeteg beállítási lehetőség: 
+            //http://www.talkingdotnet.com/handle-404-error-asp-net-core-mvc-6/
+
+            //Például átirányíthatjuk saját oldalra:
+            //app.UseStatusCodePagesWithRedirects("~/Errors/StatusCodePagesWithRedirects/{0}"); //így id-vel kell átvenni
+            //app.UseStatusCodePagesWithRedirects("~/Errors/StatusCodePagesWithRedirects?statusCode={0}"); //így meg statusCode-dal
+
+            //Vagy visszaküldjük újrafeldolgozásra, ekkor több információhoz is hozzáférünk
+            app.UseStatusCodePagesWithReExecute("/Errors/StatusCodePagesWithReExecute", "?statusCode={0}");
 
             app.UseMvcWithDefaultRoute();
+
+            //app.UseMvc(routes =>
+            //{
+            //    routes.MapRoute(
+            //        name: "default",
+            //        template: "{controller=Home}/{action=Index}/{id?}");
+            //});
         }
     }
 }

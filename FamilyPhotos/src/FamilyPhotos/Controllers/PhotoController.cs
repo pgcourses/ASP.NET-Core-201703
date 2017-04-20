@@ -135,5 +135,20 @@ namespace FamilyPhotos.Controllers
             //A kép elmentése után térjen vissza az Index oldalra
             return RedirectToAction("Index");
         }
+
+        public IActionResult EzEgyHibasKod()
+        {
+            try
+            {
+                //innentől a UseStatusCodePages nem szereplő
+                throw new Exception("Itt is van a hiba");
+            }
+            catch (Exception)
+            {
+                //ha lekezeljük a hibát, és csak a végeredményt jelezzük
+                //akkor a StatusCodePage megjelenik a felhasználónál
+                return StatusCode(500);
+            }
+        }
     }
 }

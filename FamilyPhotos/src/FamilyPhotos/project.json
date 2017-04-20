@@ -9,7 +9,8 @@
     "Microsoft.AspNetCore.Server.Kestrel": "1.0.1",
     "Microsoft.Extensions.Logging.Console": "1.0.0",
     "Microsoft.AspNetCore.Mvc": "1.0.3",
-    "AutoMapper": "6.0.2"
+    "AutoMapper": "6.0.2",
+    "System.Net.Sockets": "4.3.0"
   },
 
   "tools": {

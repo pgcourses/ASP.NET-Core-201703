@@ -75,7 +75,9 @@ II. És miután elindult
 I. Amíg a szerver elindul, a környezettõl függõen kezeli a hibakezelést:
 Development: magától adja a teljes hibaüzenetet, különben be kell állítani
 
-
+II. Alkalmazás indulása után a hibakezeléshez két eszközrendszerünk van:
+- Hibakezelési köztes rétegek használata (MiddleWare)
+- Hibaszûrõk használata (ErrorFilters)
 
 
 
