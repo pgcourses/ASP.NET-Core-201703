@@ -3,6 +3,7 @@ using FamilyPhotos.Models;
 using FamilyPhotos.Repository;
 using FamilyPhotos.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,16 @@ namespace FamilyPhotos.Controllers
     [FamilyPhotos.Filters.MyExceptionFilter3(Order=1)] // akkor nem kell sokat implementálni
     public class PhotoController : Controller
     {
-        private PhotoRepository repository;
-        private IMapper mapper;
+        private readonly PhotoRepository repository;
+        private readonly IMapper mapper;
+        private readonly ILogger<PhotoController> logger;
 
-        public PhotoController(PhotoRepository repository, IMapper mapper)
+        public PhotoController(PhotoRepository repository, IMapper mapper,
+            //Ha így vesszük át a naplózó osztályt, akkor a DI 
+            //kitöltö nekünk a kategóriát automatikusan
+            //+az egész típusos, és nem string-et írunk
+            //különben így kéne: logger.CreateLogger("FamilyPhotos.Controllers.PhotoController")
+            ILogger<PhotoController> logger)
         {
             if (repository == null)
             {
@@ -30,16 +37,43 @@ namespace FamilyPhotos.Controllers
                 throw new ArgumentNullException(nameof(mapper));
             }
             this.mapper = mapper;
+
+            if (logger == null)
+            {
+                throw new ArgumentNullException(nameof(logger));
+            }
+            this.logger = logger;
         }
 
         public IActionResult Index()
         {
+            //Szintek:
+            //Trace=0, legbővebb, csak a fejlesztők számára, 
+            //         alapértelmezésben kiszűrve
+            //         és nem szabad a Production környezetben engedélyezni
+            //logger.LogTrace
+
+            //Debug =1, 
+            //Information =2, 
+            //Warning =3, 
+            //Error =4, 
+
+            //Critical =5 Alkalmazás leállásához vezető hibák: 
+            //            elfogyott a hely, elvesztek adatok, ilyesmi.
+            // 
+
+            logger.LogTrace("Meghívták az Index actiont");
+
+
+
             var pics = repository.GetAllPhotos(); //TODO: itt még a model megy ki a View-ra
             return View(pics);
         }
 
         public IActionResult Details(int id)
         {
+            logger.LogDebug("Valaki a Details-t hívta ezzel a paraméterrel: {0}", id);
+
             var model = repository.GetPicture(id);
 
             var viewModel = mapper.Map<PhotoViewModel>(model);
@@ -50,6 +84,8 @@ namespace FamilyPhotos.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
+            logger.LogInformation("Kép módosítás kezdődik: {0}", id);
+
             var model = repository.GetPicture(id);
             var viewModel = mapper.Map<PhotoViewModel>(model);
             return View(viewModel);
@@ -105,6 +141,8 @@ namespace FamilyPhotos.Controllers
         //public IActionResult Create(string Title, string Description)
         public IActionResult Create(PhotoViewModel viewModel) //Itt az MVC modelbindere a bejövő paramétereket egyezteti a várt osztály propertyjeivel és ki is tölti
         {
+
+
             //Azon a Controller/Action-ön, ami model-t fogad, kötelező a validálás és eredményének az ellenőrzése
             //méghozzá a ModelState állapotának ellenőrzése, itt jelenik meg a validálás végeredménye
             //+ha tudjuk, akkor ValidationAttrubute-okon keresztül ellenőrizzünk

@@ -39,12 +39,10 @@ namespace FamilyPhotos
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole();
-
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            loggerFactory.AddConsole()
+                         .AddDebug(LogLevel.Trace)
+                         //.AddMyLogger()
+                         ;
 
             //Ha nem csak egyszerű státuszkóddal akarunk válaszolni, hanem 
             //szeretnénk egyszerű információkat adni, akkor például így tudunk
@@ -77,10 +75,17 @@ namespace FamilyPhotos
             //Vagy visszaküldjük újrafeldolgozásra, ekkor több információhoz is hozzáférünk
             app.UseStatusCodePagesWithReExecute("/Errors/StatusCodePagesWithReExecute", "?statusCode={0}");
 
-            //Hibakezelés saját action-nel (middleware-rel): 
-            //https://docs.microsoft.com/en-us/aspnet/core/fundamentals/error-handling
-            //app.UseExceptionHandler("/Errors"); //Ez így az /Errors/Index-re megy
-            app.UseExceptionHandler("/Errors/ExceptionHandler"); 
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                //Hibakezelés saját action-nel (middleware-rel): 
+                //https://docs.microsoft.com/en-us/aspnet/core/fundamentals/error-handling
+                //app.UseExceptionHandler("/Errors"); //Ez így az /Errors/Index-re megy
+                app.UseExceptionHandler("/Errors/ExceptionHandler");
+            }
 
             app.UseMvcWithDefaultRoute();
 

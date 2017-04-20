@@ -83,6 +83,8 @@ II. Alkalmazás indulása után a hibakezeléshez három eszközrendszerünk van:
 ezen kívül rögzíteni kéne az utókornak, hogy mi is történt valójában
 vagyis:
 NAPLÓZÁS
+https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging
+
 
 
 

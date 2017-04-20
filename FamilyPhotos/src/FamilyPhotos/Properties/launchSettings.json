@@ -13,7 +13,7 @@
       "launchBrowser": true,
       "launchUrl": "Photo",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Production"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "FamilyPhotos": {

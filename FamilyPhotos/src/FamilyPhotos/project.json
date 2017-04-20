@@ -10,7 +10,8 @@
     "Microsoft.Extensions.Logging.Console": "1.0.0",
     "Microsoft.AspNetCore.Mvc": "1.0.3",
     "AutoMapper": "6.0.2",
-    "System.Net.Sockets": "4.3.0"
+    "System.Net.Sockets": "4.3.0",
+    "Microsoft.Extensions.Logging.Debug": "1.1.1"
   },
 
   "tools": {
