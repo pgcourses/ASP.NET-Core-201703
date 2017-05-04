@@ -88,6 +88,7 @@ namespace FamilyPhotos
                 app.UseExceptionHandler("/Errors/ExceptionHandler");
             }
 
+            app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
 
             //app.UseMvc(routes =>
