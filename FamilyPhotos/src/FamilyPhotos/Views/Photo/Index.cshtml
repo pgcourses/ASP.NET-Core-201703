@@ -1,6 +1,11 @@
 ﻿@*RAZOR nyelven írjuk a nézetet*@
 @model IEnumerable<FamilyPhotos.Models.PhotoModel>
-
+<!DOCTYPE html>
+<html>
+<head>
+  <title>A családi fotóalbum</title>
+</head>
+<body>
 <h2>A fényképek listája</h2>
 
 @foreach (var photo in Model)
@@ -26,3 +31,5 @@
 <div>
     @Html.ActionLink("Új fotó létrehozása", "Create")
 </div>
+</body>
+</html>
