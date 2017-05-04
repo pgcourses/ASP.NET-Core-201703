@@ -23,6 +23,7 @@
 }
 
 <div>
-    @Html.ActionLink("Új fotó létrehozása", "Create")
+    @*ahhoz, hogy a html class propertyjébe írjuk a btn btn-danger értéket, egy kicsit cselezni kell*@
+    @Html.ActionLink("Új fotó létrehozása", "Create", null, htmlAttributes: new { @class="btn btn-danger" })
 </div>
 
