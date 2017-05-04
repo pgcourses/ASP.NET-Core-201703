@@ -86,5 +86,15 @@ NAPLÓZÁS
 https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging
 
 
+Layout és stíluslapok használata, bootstrap
 
+Egy kérés kiszolgálásakor az MVC környezet a végsõ HTML-t a következõképpen állítja elõ:
 
+- Megkeresi a Views/_ViewStart.cshtml-t, ha van lefuttatja
+- Generálja a View által megadott html részletet
+- Ha van beállítva Layout, akkor megkeresi azt az oldalt, és generálja a html-t belõle
+- a megfelelõ helyre (@RenderBody által jelölt helyen) beszúrja a nézetünk által generált html részt.
+
+Az így elkészült html meg ki a kliens felé
+
+A korábbi ASP.NET hajszálpontosan ezt csinálja, ugyanez a folyamat és ugyanezek az állomány(ok).
