@@ -2,9 +2,38 @@
 <html>
 <head>
     <title>A családi fotóalbum (Layout)</title>
-    <link href="css\bootstrap.css" rel="stylesheet" />
+    @*(4) A stílusdefiníciót kihelyezhetjük egy külön állományba*@
+    <link href="\css\bootstrap.css" rel="stylesheet" />
+
+    @*(3) Stílusokat hozunk létre, és elnevezzük őket, majd ha szükség van rájuk, behivatkozzuk*@
+    @*(3.a) elnevezzük ezt a stílust coral-nak*@
+        <style type="text/css">
+                .coral {
+                    background-color: coral;
+                }
+
+                .coral .kiveteles {
+                    background-color: red;
+                }
+
+                .corel .kiveteles .kiveteles2 {
+                    background-color: white;
+                }
+
+        </style>
+
+    @*(2) különválasztva a formázást és a megjelenítést, egy-egy html elemnek megmondhatjuk a kinézetét*@
+    @*<style type="text/css">
+        body {
+            background-color: coral;
+        }
+    </style>*@
 </head>
-<body>
-    @RenderBody()
-</body>
+
+@*(1) Mindegyik html tag-nek tudunk formázási parancsot adni a style property-jén keresztül. Pl.:*@
+@*<body style="background-color: coral;">*@
+@*(3.b) meghivatkozzuk a corel nevű stílust*@
+    <body class="coral kiveteles">
+        @RenderBody()
+    </body>
 </html>

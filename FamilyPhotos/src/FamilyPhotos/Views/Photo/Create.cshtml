@@ -2,18 +2,10 @@
 
 <h2>Új kép létrehozása</h2>
 
-@using (Html.BeginForm("Create", "Photo", FormMethod.Post, new { enctype = "multipart/form-data"}))
+@using (Html.BeginForm("Create", "Photo", FormMethod.Post, new { enctype = "multipart/form-data", @class="form-horizontal"}))
 {
     @Html.EditorForModel()
-<div>
-    <input type="submit" value="Létrehozás" />
-</div>
-}
-
-@section style {
-    <style type="text/css">
-        body {
-            background-color: coral;
-        }
-    </style>
+    <div>
+        <input type="submit" value="Létrehozás" class="btn btn-default"/>
+    </div>
 }

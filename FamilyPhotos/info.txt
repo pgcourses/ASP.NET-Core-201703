@@ -98,3 +98,10 @@ Egy kérés kiszolgálásakor az MVC környezet a végsõ HTML-t a következõképpen állí
 Az így elkészült html meg ki a kliens felé
 
 A korábbi ASP.NET hajszálpontosan ezt csinálja, ugyanez a folyamat és ugyanezek az állomány(ok).
+
+Stílusok/CSS
+Korábbi tanfolyamok a témában
+http://www.netacademia.hu/htmlkezd%C5%91-hogyan-keszitsunk-weboldalt---kezdo-html-tanfolyam
+http://www.netacademia.hu/htmlhttp-html-css-javascript-tanartovabbkepzes
+http://www.netacademia.hu/dinamikus-webdesign
+http://www.netacademia.hu/html5-programozas

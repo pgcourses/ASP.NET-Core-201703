@@ -1,18 +1,18 @@
 ﻿@model FamilyPhotos.ViewModel.PhotoViewModel
 
 @Html.ValidationSummary()
-<div>
-    @Html.LabelFor(m => m.Title)
-    @Html.EditorFor(m => m.Title)
+<div class="form-group">
+    @Html.LabelFor(m => m.Title, htmlAttributes: new { @class= "col-md-2 control-label" })
+    @Html.TextBoxFor(m => m.Title, htmlAttributes: new { @class = "form-control" } )
     @Html.ValidationMessageFor(m => m.Title)
 </div>
-<div>
-    @Html.LabelFor(m => m.Description)
-    @Html.EditorFor(m => m.Description)
+<div class="form-group">
+    @Html.LabelFor(m => m.Description, htmlAttributes: new { @class = "col-md-2 control-label" })
+    @Html.TextAreaFor(m => m.Description, htmlAttributes: new { @class = "form-control" })
     @Html.ValidationMessageFor(m => m.Description)
 </div>
-<div>
-    @Html.LabelFor(m => m.PictureFromBrowser)
-    <input type="file" name="PictureFromBrowser" />
+<div class="form-group">
+    @Html.LabelFor(m => m.PictureFromBrowser, htmlAttributes: new { @class = "col-md-2 control-label" })
+    <input type="file" name="PictureFromBrowser" class="form-control"/>
     @Html.ValidationMessageFor(m => m.PictureFromBrowser)
 </div>
