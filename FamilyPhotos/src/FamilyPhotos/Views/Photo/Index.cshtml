@@ -14,13 +14,15 @@
                 <div class="media-left media-middle">
                     @if (photo.Picture != null)
                     {
-                        <img src="@Url.Action("GetImage", new { photoId = photo.Id })" class="media-object" width="100"/>
+                        @*<img src="@Url.Action("GetImage", new { photoId = photo.Id })" class="media-object" width="100"/>*@
+                        <img id="FamilyPhoto@(photo.Id)" class="media-object" width="100" />
                     }
                 </div>
                 <div class="media-body">
                     <h4 class="media-heading">@photo.Title</h4>
                     @*A routingnak átadjuk az id paramétert*@
-                    @Html.ActionLink("Megtekintés", "Details", new { id = photo.Id }, htmlAttributes: new { @class = "btn btn-success" })
+                    @*@Html.ActionLink("Megtekintés", "Details", new { id = photo.Id }, htmlAttributes: new { @class = "btn btn-success" })*@
+                    <button class="btn btn-success" onclick="GetPicture(@(photo.Id))">Megtekintés</button>
                     @Html.ActionLink("Módosítás", "Edit", new { id = photo.Id }, htmlAttributes: new { @class = "btn btn-primary" })
                     @Html.ActionLink("Törlés", "Delete", new { id = photo.Id }, htmlAttributes: new { @class = "btn btn-danger" })
                 </div>
@@ -46,5 +48,12 @@
                 alert("Megnyomtad a tesztgombot!");
             });
     });
+
+    function GetPicture(id)
+    {
+        var src = "@Url.Action("GetImage", new { photoId = 0 })" + id;
+        $("#FamilyPhoto" + id).attr("src", src);
+    }
+
 </script>
 }
