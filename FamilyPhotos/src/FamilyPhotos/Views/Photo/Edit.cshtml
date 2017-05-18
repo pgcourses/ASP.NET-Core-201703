@@ -1,13 +1,17 @@
 ﻿@model FamilyPhotos.ViewModel.PhotoViewModel
 
-<h2>Kép módosítása</h2>
+<div class="page-header">
+    <h2>Kép módosítása</h2>
+</div>
 
-@using (Html.BeginForm("Edit", "Photo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+@using (Html.BeginForm("Edit", "Photo", FormMethod.Post, new { enctype = "multipart/form-data", @class="form-horizontal" }))
 {
     @Html.HiddenFor(m=>m.Id)
     @Html.EditorForModel()
-    <div>
-        <input type="submit" value="Módosítás" />
+    <div class="col-md-offset-2">
+        @Html.ActionLink("Vissza a képek listájára", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
+        <input type="submit" value="Módosítás" class="btn btn-primary" />
     </div>
 }
 

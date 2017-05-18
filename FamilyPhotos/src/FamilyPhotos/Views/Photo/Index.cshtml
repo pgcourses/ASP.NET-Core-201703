@@ -1,27 +1,33 @@
 ﻿@*RAZOR nyelven írjuk a nézetet*@
 @model IEnumerable<FamilyPhotos.Models.PhotoModel>
 
-<h2>A fényképek listája</h2>
+<div class="page-header">
+    <h2>A fényképek listája</h2>
+</div>
 
-@foreach (var photo in Model)
-{
-    <div>
-        @*Az Url.Action összeköttetésben van a Routing-gal, így tudja, hogy milyen url kell
-        a routingnak, hogy a kérés a jó helyre eltaláljon.*@
-        @*Mert írhatnám direktben ezt is:
-        <image src="/Photo/GetImage?photoId=@(photo.Id.ToString())" />
-        <image src="/Photo/GetImage/@(photo.Id.ToString())" />*@
-        @if (photo.Picture != null)
-        {
-        <image src="@Url.Action("GetImage", new { photoId = photo.Id })" />
-        }
-        <div>@photo.Title</div>
-        @Html.ActionLink("Megtekintés", "Details", new { id = photo.Id }) @*A routingnak átadjuk az id paramétert*@
-        @Html.ActionLink("Módosítás", "Edit", new { id = photo.Id })
-        @Html.ActionLink("Törlés", "Delete", new { id = photo.Id })
-    </div>
-}
 
+<ul>
+    @foreach (var photo in Model)
+    {
+        <li class="list-group-item">
+            <div class="media">
+                <div class="media-left media-middle">
+                    @if (photo.Picture != null)
+                    {
+                        <img src="@Url.Action("GetImage", new { photoId = photo.Id })" class="media-object" width="100"/>
+                    }
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">@photo.Title</h4>
+                    @*A routingnak átadjuk az id paramétert*@
+                    @Html.ActionLink("Megtekintés", "Details", new { id = photo.Id }, htmlAttributes: new { @class = "btn btn-success" })
+                    @Html.ActionLink("Módosítás", "Edit", new { id = photo.Id }, htmlAttributes: new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Törlés", "Delete", new { id = photo.Id }, htmlAttributes: new { @class = "btn btn-danger" })
+                </div>
+            </div>
+        </li>
+    }
+</ul>
 <div>
     @*ahhoz, hogy a html class propertyjébe írjuk a btn btn-danger értéket, egy kicsit cselezni kell*@
     @Html.ActionLink("Új fotó létrehozása", "Create", null, htmlAttributes: new { @class="btn btn-default" })

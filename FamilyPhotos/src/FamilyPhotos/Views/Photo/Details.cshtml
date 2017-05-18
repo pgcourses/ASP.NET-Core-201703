@@ -1,7 +1,11 @@
 ﻿@model FamilyPhotos.ViewModel.PhotoViewModel
 
-<h2>Kép megtekintése</h2>
-
+<div class="page-header">
+    <h2>Kép megtekintése</h2>
+</div>
+@using (Html.BeginForm(FormMethod.Get, htmlAttributes: new { @class = "form-horizontal" }))
+{
 @Html.DisplayForModel()
 
-@Html.ActionLink("Vissza a képek listájára","Index")
+    @Html.ActionLink("Vissza a képek listájára", "Index", null, htmlAttributes: new { @class = "btn btn-default col-md-offset-2" })
+}

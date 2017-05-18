@@ -1,17 +1,21 @@
 ﻿@model FamilyPhotos.ViewModel.PhotoViewModel
 
-<div>
-    @Html.LabelFor(m => m.Title)
-    @Html.DisplayFor(m => m.Title)
+<div class="form-group">
+    @Html.LabelFor(m => m.Title, htmlAttributes: new { @class = "col-md-2 control-label" })
+    <div class="col-md-9">
+        @Html.TextBoxFor(m => m.Title, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+    </div>
 </div>
-<div>
-    @Html.LabelFor(m => m.Description)
-    @Html.DisplayFor(m => m.Description)
+<div class="form-group">
+    @Html.LabelFor(m => m.Description, htmlAttributes: new { @class = "col-md-2 control-label" })
+    <div class="col-md-9">
+        @Html.TextAreaFor(m => m.Description, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
+    </div>
 </div>
-<div>
-    @Html.LabelFor(m => m.PictureFromBrowser)
+<div class="form-group">
+    @Html.LabelFor(m => m.PictureFromBrowser, htmlAttributes: new { @class = "col-md-2 control-label" })
     @if (Model != null)
     {
-        <image src="@Url.Action("GetImage", new { photoId = Model.Id })" />
+        <image src="@Url.Action("GetImage", new { photoId = Model.Id })" class="col-md-2"/>
     }
 </div>
