@@ -28,8 +28,23 @@
         </li>
     }
 </ul>
-<div>
+<div class="row">
     @*ahhoz, hogy a html class propertyjébe írjuk a btn btn-danger értéket, egy kicsit cselezni kell*@
-    @Html.ActionLink("Új fotó létrehozása", "Create", null, htmlAttributes: new { @class="btn btn-default" })
+    @Html.ActionLink("Új fotó létrehozása", "Create", null, htmlAttributes: new { @class= "btn btn-default col-md-offset-2" })
 </div>
 
+<div class="row">
+    <button class="btn btn-info col-md-offset-2" id="tesztgomb">Teszt</button>
+</div>
+
+
+@*a _Layout-ban @RenderSection("script", false) sorral definiált helyre kerül ez a kódrészlet*@
+@section script {
+<script type="text/javascript">
+    $(document).ready(function () {
+            $("#tesztgomb").click(function() {
+                alert("Megnyomtad a tesztgombot!");
+            });
+    });
+</script>
+}

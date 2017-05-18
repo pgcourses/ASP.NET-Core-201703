@@ -3,7 +3,7 @@
 <head>
     <title>A családi fotóalbum (Layout)</title>
     @*(4) A stílusdefiníciót kihelyezhetjük egy külön állományba*@
-    <link href="\css\bootstrap.css" rel="stylesheet" />
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
 
     @*(3) Stílusokat hozunk létre, és elnevezzük őket, majd ha szükség van rájuk, behivatkozzuk*@
     @*(3.a) elnevezzük ezt a stílust coral-nak*@
@@ -35,5 +35,7 @@
 @*(3.b) meghivatkozzuk a corel nevű stílust*@
     <body class="coral kiveteles">
         @RenderBody()
+        <script type="text/javascript" src="~/script/jquery.min.js"></script>
+        @RenderSection("script", false)
     </body>
 </html>
