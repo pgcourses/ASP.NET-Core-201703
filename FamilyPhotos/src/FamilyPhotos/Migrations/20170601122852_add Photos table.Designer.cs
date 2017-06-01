@@ -8,9 +8,10 @@ using FamilyPhotos.Data;
 namespace FamilyPhotos.Migrations
 {
     [DbContext(typeof(FamilyPhotosContext))]
-    partial class FamilyPhotosContextModelSnapshot : ModelSnapshot
+    [Migration("20170601122852_add Photos table")]
+    partial class addPhotostable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.4")
