@@ -17,7 +17,5 @@ namespace FamilyPhotos.Data
     {
         public FamilyPhotosContext(DbContextOptions<FamilyPhotosContext> options) : base(options)
         { }
-
-        DbSet<PhotoModel> Photos { get; set; }
     }
 }
