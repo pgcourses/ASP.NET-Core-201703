@@ -12,19 +12,48 @@ using FamilyPhotos.Filters;
 using FamilyPhotos.Loggers;
 using FamilyPhotos.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace FamilyPhotos
 {
+
     public class Startup
     {
+        //A startup konstruktor hozza létre
+        private readonly IConfigurationRoot Configuration;
+
+        /// <summary>
+        /// Az alkalmazás konfigurációját három forrásból tudjuk
+        /// kitölteni:
+        /// 
+        /// 1. konfigurációs állományok, (célszerűen json file-ok)
+        /// 2. Környezeti változók (parancsori paraméterek és SET-tel beállított értékek)
+        /// 3. A kódunkban végrehajtott beáűllítások
+        ///
+        ///elmélet:
+        ///http://netacademia.blog.hu/2016/05/14/hogy_kerulhetjuk_el_a_szoftverpusztulast_12factor_app_3_beallitasok_konfiguraciokezeles
+        /// </summary>
+        /// <param name="environment">A futtatókörnyezet által átadott paraméterpéldány</param>
+        public Startup(IHostingEnvironment environment)
+        {
+            var builder = new ConfigurationBuilder()
+                                .SetBasePath(environment.ContentRootPath) //beállítjuk az állományok helyét
+                                .AddJsonFile("appsettings.json",optional: true, reloadOnChange: true) //betöltjük a közös paramétereket
+                                .AddJsonFile($"appsettings.{environment.EnvironmentName}.json",optional: true) //a Development/Staging/Production paramétereket
+                                .AddEnvironmentVariables() //rátöltjük a környezeti paramétereket
+                                ;
+
+            Configuration = builder.Build();
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             //beüzemeljük az EntityFramework Core eszközeit
+            //méghozzá a beépített konfigurációs lehetőségek kihasználásával
             services.AddDbContext<FamilyPhotosContext>(options => {
-                //options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=FamilyPhotosDB;Trusted_Connection=True;");
-                options.UseSqlServer("Server=.\\sqlexpress;Database=FamilyPhotosDB;Trusted_Connection=True;");
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
             //Ha tesztelni akarjuk az indulás közbeni hibakezelést, akkor ezt például így tehetjük meg
