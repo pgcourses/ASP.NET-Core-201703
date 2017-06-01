@@ -15,11 +15,11 @@ namespace FamilyPhotos.Controllers
     [FamilyPhotos.Filters.MyExceptionFilter3(Order=1)] // akkor nem kell sokat implementálni
     public class PhotoController : Controller
     {
-        private readonly PhotoRepository repository;
+        private readonly IPhotoRepository repository;
         private readonly IMapper mapper;
         private readonly ILogger<PhotoController> logger;
 
-        public PhotoController(PhotoRepository repository, IMapper mapper,
+        public PhotoController(IPhotoRepository repository, IMapper mapper,
             //Ha így vesszük át a naplózó osztályt, akkor a DI 
             //kitöltö nekünk a kategóriát automatikusan
             //+az egész típusos, és nem string-et írunk
