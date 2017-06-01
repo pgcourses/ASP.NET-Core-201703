@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 using FamilyPhotos.Repository;
 using FamilyPhotos.Filters;
 using FamilyPhotos.Loggers;
+using FamilyPhotos.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace FamilyPhotos
 {
@@ -19,6 +21,12 @@ namespace FamilyPhotos
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            //beüzemeljük az EntityFramework Core eszközeit
+            services.AddDbContext<FamilyPhotosContext>(options => {
+                //options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=FamilyPhotosDB;Trusted_Connection=True;");
+                options.UseSqlServer("Server=.\\sqlserverexpress;Database=FamilyPhotosDB;Trusted_Connection=True;");
+            });
+
             //Ha tesztelni akarjuk az indulás közbeni hibakezelést, akkor ezt például így tehetjük meg
             //throw new Exception("ez itt egy hiba");
 
