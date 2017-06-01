@@ -24,7 +24,7 @@ namespace FamilyPhotos
             //beüzemeljük az EntityFramework Core eszközeit
             services.AddDbContext<FamilyPhotosContext>(options => {
                 //options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=FamilyPhotosDB;Trusted_Connection=True;");
-                options.UseSqlServer("Server=.\\sqlserverexpress;Database=FamilyPhotosDB;Trusted_Connection=True;");
+                options.UseSqlServer("Server=.\\sqlexpress;Database=FamilyPhotosDB;Trusted_Connection=True;");
             });
 
             //Ha tesztelni akarjuk az indulás közbeni hibakezelést, akkor ezt például így tehetjük meg
