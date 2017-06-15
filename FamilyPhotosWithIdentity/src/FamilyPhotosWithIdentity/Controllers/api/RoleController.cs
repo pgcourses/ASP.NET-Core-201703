@@ -42,8 +42,17 @@ namespace FamilyPhotosWithIdentity.Controllers.api
                 vm.Add(new RoleViewModel { UrlCode = role.UrlCode, Name = role.Name });
             }
 
+
+
+            var filteredVm = string.IsNullOrWhiteSpace(request?.Search.Value)
+                                     ? vm
+                                     : vm.Where(x => x.Name.Contains(request?.Search.Value))
+                                         .ToList();
+
+            var vmPage = filteredVm.Skip(request.Start).Take(request.Length);
+
             //Elõkészület a DataTables válaszra
-            var response = DataTablesResponse.Create(request, vm.Count, vm.Count, vm);
+            var response = DataTablesResponse.Create(request, vm.Count, filteredVm.Count, vmPage);
             return new DataTablesJsonResult(response);
         }
     }
