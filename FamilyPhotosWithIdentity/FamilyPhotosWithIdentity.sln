@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6E44041A-9EAC-48FA-876D-707E72AA26CC}"
 	ProjectSection(SolutionItems) = preProject
 		global.json = global.json
+		..\Info.md = ..\Info.md
 	EndProjectSection
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "FamilyPhotosWithIdentity", "src\FamilyPhotosWithIdentity\FamilyPhotosWithIdentity.xproj", "{36167E9E-411C-4F4F-97B0-7F481681CE9A}"

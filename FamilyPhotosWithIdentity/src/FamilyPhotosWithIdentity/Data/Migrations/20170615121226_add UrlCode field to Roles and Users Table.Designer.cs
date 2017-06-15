@@ -8,9 +8,10 @@ using FamilyPhotosWithIdentity.Data;
 namespace FamilyPhotosWithIdentity.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170615121226_add UrlCode field to Roles and Users Table")]
+    partial class addUrlCodefieldtoRolesandUsersTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
