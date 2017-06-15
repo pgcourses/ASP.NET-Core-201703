@@ -14,7 +14,6 @@ namespace FamilyPhotosWithIdentity.Controllers
     //[Authorize(Roles="Administrators")] //ez a régi módszer, ugyanúgy használható
     //[Authorize(Policy="RequiredElevatedAdminRights")] ez ugyanaz, mint a következõ, mert ez az alapértelmezett
     [Authorize("RequiredElevatedAdminRights")]
-
     public class RoleController : Controller
     {
         private readonly RoleManager<ApplicationRole> roleManager;
