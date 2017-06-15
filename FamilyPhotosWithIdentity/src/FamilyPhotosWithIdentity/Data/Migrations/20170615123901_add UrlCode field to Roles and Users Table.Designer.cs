@@ -8,7 +8,7 @@ using FamilyPhotosWithIdentity.Data;
 namespace FamilyPhotosWithIdentity.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170615121226_add UrlCode field to Roles and Users Table")]
+    [Migration("20170615123901_add UrlCode field to Roles and Users Table")]
     partial class addUrlCodefieldtoRolesandUsersTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,7 +71,8 @@ namespace FamilyPhotosWithIdentity.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .HasColumnName("Id");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -188,7 +189,7 @@ namespace FamilyPhotosWithIdentity.Data.Migrations
                     b.Property<string>("UrlCode")
                         .HasAnnotation("MaxLength", 100);
 
-                    b.ToTable("ApplicationRole");
+                    b.ToTable("AspNetRoles");
 
                     b.HasDiscriminator().HasValue("ApplicationRole");
                 });

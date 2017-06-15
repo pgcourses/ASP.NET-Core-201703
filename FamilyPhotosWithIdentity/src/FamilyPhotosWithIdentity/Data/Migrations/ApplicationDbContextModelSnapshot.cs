@@ -70,7 +70,8 @@ namespace FamilyPhotosWithIdentity.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .HasColumnName("Id");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -187,7 +188,7 @@ namespace FamilyPhotosWithIdentity.Data.Migrations
                     b.Property<string>("UrlCode")
                         .HasAnnotation("MaxLength", 100);
 
-                    b.ToTable("ApplicationRole");
+                    b.ToTable("AspNetRoles");
 
                     b.HasDiscriminator().HasValue("ApplicationRole");
                 });

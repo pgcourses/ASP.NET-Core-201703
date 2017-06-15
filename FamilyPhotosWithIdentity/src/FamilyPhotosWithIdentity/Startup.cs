@@ -44,7 +44,7 @@ namespace FamilyPhotosWithIdentity
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             //Itt lehet a jelszó policy-t megváltoztatni.
-            services.AddIdentity<ApplicationUser, IdentityRole>( options=> {
+            services.AddIdentity<ApplicationUser, ApplicationRole>( options=> {
                 options.Password.RequireDigit = false;
                 options.Password.RequiredLength = 4;
                 options.Password.RequireLowercase = false;
