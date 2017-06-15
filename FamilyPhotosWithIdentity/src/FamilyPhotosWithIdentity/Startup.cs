@@ -56,6 +56,12 @@ namespace FamilyPhotosWithIdentity
 
             services.AddMvc();
 
+            services.AddAuthorization(options => 
+            {
+                options.AddPolicy("RequiredElevatedAdminRights", 
+                    policy => policy.RequireRole("Administrators"));
+            });
+
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
