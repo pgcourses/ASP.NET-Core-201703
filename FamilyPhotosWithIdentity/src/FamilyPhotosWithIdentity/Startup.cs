@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using FamilyPhotosWithIdentity.Data;
 using FamilyPhotosWithIdentity.Models;
 using FamilyPhotosWithIdentity.Services;
+using DataTables.AspNet.AspNetCore;
 
 namespace FamilyPhotosWithIdentity
 {
@@ -65,6 +66,9 @@ namespace FamilyPhotosWithIdentity
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+
+            //A DataTables DI szervize
+            services.RegisterDataTables();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

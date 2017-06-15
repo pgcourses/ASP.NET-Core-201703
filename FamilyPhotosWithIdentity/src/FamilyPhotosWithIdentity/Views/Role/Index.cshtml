@@ -7,7 +7,7 @@
 <h2>Index</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-default">Create New</a>
 </p>
 <table class="table" id="tbl_roles">
     <thead>
@@ -35,7 +35,26 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#tbl_roles").DataTable();
+            $("#tbl_roles").DataTable({
+                serverSide: true,
+                ajax: {
+                    url: "@Url.Action("Post", "Role")",
+                    type: "POST"
+                },
+                columns: [
+                    {
+                        data: "name",
+                        title: "@Html.DisplayNameFor(model=>model.Name)"
+                    },
+                    {
+                        data: "urlCode",
+                        render: function (data) {
+                            return "<a href=\"@Url.Action("Edit", "Role")?urlCode=" + data + "\" class=\"btn btn-default\">Edit</a>" +
+                                   "<a href=\"@Url.Action("Delete", "Role")?urlCode="+data+"\" class=\"btn btn-default\">Delete</a>";
+                        }
+                    }
+                ]
+            });
         });
     </script>
 
