@@ -37,13 +37,25 @@ namespace FamilyPhotosWithIdentity.Controllers
             _logger = loggerFactory.CreateLogger<AccountController>();
         }
 
+        [AllowAnonymous]
+        public IActionResult AccessDenied(string returnUrl = null)
+        {
+            return RedirectToAction(nameof(Login),
+                new
+                {
+                    returnUrl = returnUrl, 
+                    message = $"You must by in the Administrator role to Access this page: {returnUrl}"
+                });
+        }
+
         //
         // GET: /Account/Login
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Login(string returnUrl = null)
+        public IActionResult Login(string returnUrl = null, string message = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+            ViewData["Message"] = message;
             return View();
         }
 

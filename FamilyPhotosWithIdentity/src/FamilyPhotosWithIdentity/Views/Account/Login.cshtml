@@ -14,6 +14,10 @@
         <section>
             <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
                 <h4>Use a local account to log in.</h4>
+                @if (ViewData["Message"]!=null)
+                { 
+                    <h4>@ViewData["Message"]</h4>
+                }
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
