@@ -42,17 +42,49 @@ namespace FamilyPhotosWithIdentity.Controllers.api
                 vm.Add(new RoleViewModel { UrlCode = role.UrlCode, Name = role.Name });
             }
 
-
-
             var filteredVm = string.IsNullOrWhiteSpace(request?.Search.Value)
                                      ? vm
                                      : vm.Where(x => x.Name.Contains(request?.Search.Value))
-                                         .ToList();
+                                     ;
 
-            var vmPage = filteredVm.Skip(request.Start).Take(request.Length);
+            var sortColumns = request.Columns
+                                     .Where(c => c.Sort != null)
+                                     .OrderBy(c=> c.Sort.Order)
+                                     .ToList();
+
+            //Linq Expression használatával lehetne általánossá tenni
+            foreach (var column in sortColumns)
+            {
+                if (column.Sort.Direction==SortDirection.Ascending)
+                {
+                    if (column.Field.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                    {
+                        filteredVm = filteredVm.OrderBy(c => c.Name);
+                    }
+                    if (column.Field.Equals("UrlCode", StringComparison.OrdinalIgnoreCase))
+                    {
+                        filteredVm = filteredVm.OrderBy(c => c.UrlCode);
+                    }
+                }
+                else
+                {
+                    if (column.Field.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                    {
+                        filteredVm = filteredVm.OrderByDescending(c => c.Name);
+                    }
+                    if (column.Field.Equals("UrlCode", StringComparison.OrdinalIgnoreCase))
+                    {
+                        filteredVm = filteredVm.OrderByDescending(c => c.UrlCode);
+                    }
+                }
+            }
+
+            var vmPage = filteredVm.Skip(request.Start)
+                                   .Take(request.Length)
+                                   .ToList();
 
             //Elõkészület a DataTables válaszra
-            var response = DataTablesResponse.Create(request, vm.Count, filteredVm.Count, vmPage);
+            var response = DataTablesResponse.Create(request, vm.Count, filteredVm.Count(), vmPage);
             return new DataTablesJsonResult(response);
         }
     }
