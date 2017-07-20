@@ -13,6 +13,7 @@ using FamilyPhotosWithIdentity.Data;
 using FamilyPhotosWithIdentity.Models;
 using FamilyPhotosWithIdentity.Services;
 using DataTables.AspNet.AspNetCore;
+using FamilyPhotosWithIdentity.Helpers;
 
 namespace FamilyPhotosWithIdentity
 {
@@ -57,6 +58,8 @@ namespace FamilyPhotosWithIdentity
 
             services.AddMvc();
 
+            services.AddAuthentication();
+
             services.AddAuthorization(options => 
             {
                 options.AddPolicy("RequiredElevatedAdminRights", 
@@ -93,6 +96,18 @@ namespace FamilyPhotosWithIdentity
             app.UseIdentity();
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
+            app.UseOpenIdConnectServer(
+                options => {
+                    options.AllowInsecureHttp = true;
+                    options.TokenEndpointPath = "/api/token";
+                    options.AccessTokenLifetime = TimeSpan.FromDays(1);
+                    //azért, hogy ne kelljen ide írni a kódot, extension függvényt írunk
+                    //options.Provider.OnValidateTokenRequest = context => { return Task.FromResult(0); };
+                    options.UseMyValidateTokenRequest();
+                    options.UseMyHandleTokenRequest();
+
+                }
+            );
 
             app.UseMvc(routes =>
             {
