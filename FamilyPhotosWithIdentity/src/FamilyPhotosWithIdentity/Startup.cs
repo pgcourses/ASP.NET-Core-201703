@@ -64,6 +64,16 @@ namespace FamilyPhotosWithIdentity
             {
                 options.AddPolicy("RequiredElevatedAdminRights", 
                     policy => policy.RequireRole("Administrators"));
+                options.AddPolicy("RequiredElevatedAdminRightsForAPI",
+                    policy => policy.RequireClaim("role", "Administrators"));
+
+                options.AddPolicy("RequiredElevatedAdminRigthsCombined",
+                    policy => policy.RequireAssertion(context => {
+                        return context.User.IsInRole("Administrators")
+                                || context.User.HasClaim(
+                                    claim=>claim.Type=="role" && claim.Value=="Administrators");
+                    }));
+
             });
 
             // Add application services.
@@ -94,6 +104,8 @@ namespace FamilyPhotosWithIdentity
             app.UseStaticFiles();
 
             app.UseIdentity();
+
+            app.UseOAuthValidation();
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
             app.UseOpenIdConnectServer(

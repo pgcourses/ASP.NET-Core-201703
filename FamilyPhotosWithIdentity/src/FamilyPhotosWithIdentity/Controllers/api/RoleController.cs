@@ -10,11 +10,15 @@ using FamilyPhotosWithIdentity.Helpers;
 using FamilyPhotosWithIdentity.Models.RoleViewModels;
 using DataTables.AspNet.Core;
 using DataTables.AspNet.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FamilyPhotosWithIdentity.Controllers.api
 {
     [Produces("application/json")]
     [Route("api/Role")]
+    //[Authorize("RequiredElevatedAdminRights")]
+    //[Authorize("RequiredElevatedAdminRightsForAPI")]
+    [Authorize("RequiredElevatedAdminRigthsCombined")]
     public class RoleController : Controller
     {
         private readonly RoleManager<ApplicationRole> roleManager;

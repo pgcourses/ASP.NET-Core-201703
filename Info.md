@@ -66,13 +66,29 @@ Ha ez jól lefut, akkor a kérésünkre kapott válasz (pl:)
     "token_type": "Bearer",
     "access_token": "CfDJ8ITYHYiWz...",
     "expires_in": 86400,
+	"refresh_token": "CfDJ8ITYHYiW......"
     "id_token": "eyJhbGciOiJub..."
 }
 
+Ahhoz, hogy a bejelentkezett felhasználó kérését a szerver fogadni és feldolgozni tudja, az access_token-t használjuk
+
+Méghozz, minden kérésre kell tenni egy Authorization header változót, aminek az értéke:
+
+Bearer CfDJ8ITYHYiWzedEmvGkmA-S....
+
+Tehát, a Bearer szöveg, szóköz, majd az access_token értéke. 
+
+Ha lejárt a tokenünk érvényessége, akkor pedig a 
+grant_type=refresh_token és refresh_token=CfDJ8ITYHYiW......
+
+paraméterekkel tudunk kérni új access tokent, tehát anélkül, hogy nevet és jelszót kéne újra küldeni.
+
 Az access tokenre van szükségünk a továbbiakhoz.
+Ebben a tokenben szerepeltethetjük a csoporttagságot is, ekkor a policy-ben tudunk ilyet is kérdezni.
 
 ## Authorizáció
 
 A korábbiakhoz hasonlóan, a webapi kontrollereken is Authorize attributumokkal szeretnénk
 a jogosultságokat beállítani.
 
+Mivel beleírtuk a tokenbe a role-okat, így erre készünk policy-t

@@ -114,7 +114,9 @@ namespace FamilyPhotosWithIdentity.Helpers
 
                     //ide jön még egy csomó minden
 
-                    //
+                    //2 faktoros authentikáció
+                    //túl sok próbálkozás miatti kitiltás kezelése
+                    //stb.
 
                     //végül ellenőrizzük, hogy a név és jelszó megfelelő-e?
                     var isPasswordOk = await manager.CheckPasswordAsync(user, context.Request.Password);
@@ -130,8 +132,17 @@ namespace FamilyPhotosWithIdentity.Helpers
                     var identity = new System.Security.Claims.ClaimsIdentity(context.Options.AuthenticationScheme);
                     identity.AddClaim(OpenIdConnectConstants.Claims.Subject, user.UrlCode);
                     identity.AddClaim("username", context.Request.Username, 
-                        OpenIdConnectConstants.Destinations.AccessToken,
-                        OpenIdConnectConstants.Destinations.IdentityToken);
+                        OpenIdConnectConstants.Destinations.AccessToken
+                        , OpenIdConnectConstants.Destinations.IdentityToken); //ha a jwt-ben ezt szeretnénk látni
+
+                    //tegyük rá a tokenre a felhasználó csoporttagságát is:
+                    var roles = await manager.GetRolesAsync(user);
+                    foreach (var role in roles)
+                    {
+                        identity.AddClaim("role", role, 
+                            OpenIdConnectConstants.Destinations.AccessToken
+                            , OpenIdConnectConstants.Destinations.IdentityToken); //ha a jwt-ben ezt szeretnénk látni
+                    }
 
                     var ticket = new Microsoft.AspNetCore.Authentication.AuthenticationTicket(
                         new System.Security.Claims.ClaimsPrincipal(identity)
@@ -139,7 +150,8 @@ namespace FamilyPhotosWithIdentity.Helpers
                         ,context.Options.AuthenticationScheme);
 
                     ticket.SetScopes(
-                        OpenIdConnectConstants.Scopes.OpenId
+                        OpenIdConnectConstants.Scopes.OpenId //ha openId jwt tokent is akarunk gyártani
+                        ,OpenIdConnectConstants.Scopes.OfflineAccess //a refresh token készítéshez ezt be kell állítani
                         );
 
 
