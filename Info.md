@@ -21,3 +21,13 @@ Egy új szint:
 3. Egy _policy_ menet közben megmondja, hogy az adott felhasználóra milyen szabályok vonatkoznak
    a policy hivatkozhat csoporttagságra IS.
 4. Az erõforrást policy-vel védjük
+
+# WebHook feldolgozás
+## Github webhook fogadása
+
+1. ngrok indítása: 
+
+ngrok http 59167 -host-header="localhost:59167"
+
+
+

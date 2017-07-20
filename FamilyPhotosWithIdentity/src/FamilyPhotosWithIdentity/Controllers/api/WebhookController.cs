@@ -1,6 +1,8 @@
-﻿using FamilyPhotosWithIdentity.Models.Github;
+﻿using FamilyPhotosWithIdentity.Data;
+using FamilyPhotosWithIdentity.Models.Github;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -46,10 +48,48 @@ namespace FamilyPhotosWithIdentity.Controllers.api
     //|                  |             |              |                                     |                    |
     //+------------------+             +--------------+                                     +--------------------+
 
+
+    // Osztályhierarchia
+
+    //     +--------------+              +---------+
+    //     |    Request   |+------------>|  Hook   |
+    //     |--------------|              +---------+
+    //     |              |
+    //     |              |              +---------+                UUUU
+    //     |              |              |         |               +--------+
+    //     |              |+------------>| Issue   |+------------> |User    |
+    //     |              |              |         |               +--------+
+    //     +-+------------+              |         |
+    //       |    +  +                   |         |               +---------------+
+    //       |    |  |                   +---------+               | Assignee      |
+    //       |    |  |                                             |               |
+    //       |    |  |                   +---------+               +---------------+
+    //       |    |  |                   |         |
+    //       |    |  |                   | Repository
+    //       |    |  +------------------>|         |               +------------------+      UUUU
+    //       |    |                      |         |   UUUU        |                  |     +----------+
+    //       |    |                      |         |  +---------+  |  Milestone       |+--->| Creator  |
+    //       |    |                      |         |+>| Owner   |  |                  |     +----------+
+    //       |    |                      +---------+  |         |  |                  |
+    //  UUUU v    |                                   +---------+  +------------------+
+    // +-------+  |                      +---------+
+    // |User   |  |                      |         |
+    // |       |  +--------------------->|Organization
+    // +-------+                         |         |
+    //                                   |         |
+    //                                   +---------+
+
     [Route("api/Github")]
     [AllowAnonymous]
     public class WebhookController : Controller
     {
+        private readonly ApplicationDbContext db;
+
+        public WebhookController(ApplicationDbContext db)
+        {
+            this.db = db;
+        }
+
         [HttpPost]
         public IActionResult Post()
         {
@@ -73,6 +113,32 @@ namespace FamilyPhotosWithIdentity.Controllers.api
             if (payload != null)
             {
                 var request = JsonConvert.DeserializeObject<GithubRequest>(payload);
+                if (request!=null)
+                {
+                    db.AddOrUpdate(request.sender);
+                    db.AddOrUpdate(request.issue.user);
+                    db.AddOrUpdate(request.issue.assignee);
+
+                    foreach (var assignee in request.issue.assignees)
+                    {
+                        db.AddOrUpdate(assignee);
+                    }
+
+                    db.AddOrUpdate(request.repository.owner);
+                    db.AddOrUpdate(request.repository);
+                    db.AddOrUpdate(request.organization);
+                    db.AddOrUpdate(request.issue.assignee);
+                    db.AddOrUpdate(request.issue.milestone);
+                    db.AddOrUpdate(request.issue.milestone?.creator);
+                    db.SaveChanges();
+
+                    db.AddOrUpdate(request.issue);
+
+                    db.SaveChanges();
+
+                    db.AddOrUpdate(request);
+                    db.SaveChanges();
+                }
             }
             return Ok();
         }

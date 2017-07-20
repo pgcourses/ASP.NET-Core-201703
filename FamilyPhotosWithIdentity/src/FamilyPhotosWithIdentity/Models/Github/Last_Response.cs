@@ -7,8 +7,10 @@ namespace FamilyPhotosWithIdentity.Models.Github
 {
     public class Last_Response
     {
-        public object code { get; set; }
+        public int id { get; set; }
+
+        public string code { get; set; }
         public string status { get; set; }
-        public object message { get; set; }
+        public string message { get; set; }
     }
 }

@@ -1,7 +1,9 @@
 ﻿namespace FamilyPhotosWithIdentity.Models.Github
 {
-    public class GithubRequest
+    public class GithubRequest : IEntityWithID
     {
+        public int id { get; set; }
+
         public string zen { get; set; }
         public string action { get; set; }
         public int hook_id { get; set; }
@@ -9,6 +11,6 @@
         public Issue issue { get; set; }
         public Repository repository { get; set; }
         public Organization organization { get; set; }
-        public Sender sender { get; set; }
+        public User sender { get; set; }
     }
 }

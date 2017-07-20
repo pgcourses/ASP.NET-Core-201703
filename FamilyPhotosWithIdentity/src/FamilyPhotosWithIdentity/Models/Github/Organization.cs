@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace FamilyPhotosWithIdentity.Models.Github
 {
-    public class Organization
+    public class Organization : IEntityWithID
     {
-        public string login { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
+
+        public string login { get; set; }
         public string url { get; set; }
         public string repos_url { get; set; }
         public string events_url { get; set; }
@@ -17,6 +20,6 @@ namespace FamilyPhotosWithIdentity.Models.Github
         public string members_url { get; set; }
         public string public_members_url { get; set; }
         public string avatar_url { get; set; }
-        public object description { get; set; }
+        public string description { get; set; }
     }
 }
