@@ -12,6 +12,7 @@ namespace FamilyPhotosWithIdentity
         public static void Main(string[] args)
         {
             var host = new WebHostBuilder()
+                .UseUrls("http://*:1000")
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()

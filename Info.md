@@ -92,3 +92,51 @@ A korábbiakhoz hasonlóan, a webapi kontrollereken is Authorize attributumokkal s
 a jogosultságokat beállítani.
 
 Mivel beleírtuk a tokenbe a role-okat, így erre készünk policy-t
+
+# Docker
+https://www.netacademia.hu/Tanfolyam/dockerbemutato-ingyenes-docker-bemutato
+https://www.netacademia.hu/Tanfolyam/docker-docker
+
+Megoldja a "saját gépemen mûködik" problémáját.
+Tároló (container): szabványosított csomagolás: az alkalmazás állományai, környezeti bállításai és a függöségeinek a szabványosított csomagja.
+Réteg (Layer): az egyes tárolók rétegenként egymásra épülnek, a legfelsõt tudjuk módosítani, minden más réteg csak olvasható.
+Image: a buildelt docker container.
+Nyilvántartás (Registry): a Docker központi nyilvántartása az elérhetõ images-krõl
+
+Windows alá telepíthetõ innen:
+https://store.docker.com/editions/community/docker-ce-desktop-windows
+
+Alkalmazás függõség: MSSQL szerver
+Szerencsére a Microsoft kiadta már az SQL-t linux alá is, így egyszerû Linux conténerben elérhetõ:
+
+ha nem adunk nevet az SQL konténernek, akkor a docker ad neki minden létrehozáskor más és más nevet.
+Mivel a különbözõ konténerekbõl a névvel hivatkozunk egy másik konténerre, ez csak nehezítené az életünket.
+(docker run -e ACCEPT_EULA=Y -e SA_PASSWORD=B1zt0nság -p 1433:1433 -d microsoft/mssql-server-linux)
+
+Ezért névvel elnevezzük:
+docker run -e ACCEPT_EULA=Y -e SA_PASSWORD=B1zt0nság -p 1433:1433 --name sqlonlinuxondocker -d microsoft/mssql-server-linux
+
+A docker csomag készítéséhez szükség van egy leíróra, ez minden esetben a Dockerfile (nagybetûvel, kiterjesztés nélkül.)
+
+a dotnet publish-hoz szükség van a kliens oldali eszközökere (pl. bower), ezért a konzolban ezt kell futtatni:
+
+set Path=%PATH%;C:\Program Files (x86)\Microsoft Visual Studio 14.0\Web\External;
+
+majd a konzolban:
+
+dotnet publish -o publish
+
+Ez után a konzolban elindíthatjuk a docker buildet:
+
+docker build -t familyphotoswithidentity .
+
+Figyelem, a pont kell a sor végére!!!
+
+docker run -it -p 1000:1000 --link sqlonlinuxondocker familyphotoswithidentity
+
+
+
+
+
+
+
