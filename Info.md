@@ -103,7 +103,7 @@ Réteg (Layer): az egyes tárolók rétegenként egymásra épülnek, a legfelsõt tudjuk
 Image: a buildelt docker container.
 Nyilvántartás (Registry): a Docker központi nyilvántartása az elérhetõ images-krõl
 
-Windows alá telepíthetõ innen:
+0. Windows alá telepíthetõ innen:
 https://store.docker.com/editions/community/docker-ce-desktop-windows
 
 Alkalmazás függõség: MSSQL szerver
@@ -114,11 +114,9 @@ Mivel a különbözõ konténerekbõl a névvel hivatkozunk egy másik konténerre, ez cs
 (docker run -e ACCEPT_EULA=Y -e SA_PASSWORD=B1zt0nság -p 1433:1433 -d microsoft/mssql-server-linux)
 
 Ezért névvel elnevezzük:
-docker run -e ACCEPT_EULA=Y -e SA_PASSWORD=B1zt0nság -p 1433:1433 --name sqlonlinuxondocker -d microsoft/mssql-server-linux
+1. docker run -e ACCEPT_EULA=Y -e SA_PASSWORD=B1zt0nság -p 1433:1433 --name sqlonlinuxondocker -d microsoft/mssql-server-linux
 
-A docker csomag készítéséhez szükség van egy leíróra, ez minden esetben a Dockerfile (nagybetûvel, kiterjesztés nélkül.)
-
-a dotnet publish-hoz szükség van a kliens oldali eszközökere (pl. bower), ezért a konzolban ezt kell futtatni:
+2. a dotnet publish-hoz szükség van a kliens oldali eszközökere (pl. bower), ezért a konzolban ezt kell futtatni:
 
 set Path=%PATH%;C:\Program Files (x86)\Microsoft Visual Studio 14.0\Web\External;
 
@@ -126,17 +124,83 @@ majd a konzolban:
 
 dotnet publish -o publish
 
+3. A docker csomag készítéséhez szükség van egy leíróra, ez minden esetben a Dockerfile (nagybetûvel, kiterjesztés nélkül.)
+
+Ez most így néz ki:
+
+FROM microsoft/dotnet:1.0-runtime
+WORKDIR /src/FamilyPhotosWithIdentity
+COPY publish .
+ENTRYPOINT ["dotnet", "FamilyPhotosWithIdentity.dll"]
+
 Ez után a konzolban elindíthatjuk a docker buildet:
 
 docker build -t familyphotoswithidentity .
 
 Figyelem, a pont kell a sor végére!!!
 
+4. Mielõtt az alkalmazásunkat futtatnánk, ki kell adni parancssorból a 
+
+dotnet ef database update 
+
+parancsot az adatbázis generálásához. Azonban ez a parancs a appsettings.json-bõl veszi a paramétereit, így oda az 
+adatbázis elérését ideiglenesen át kell írni erre:
+
+"DefaultConnection": "Server=localhost;Database=FamilyPhotosWithIdentityDB;User Id=sa;Password=B1zt0nság;MultipleActiveResultSets=true"
+
+hiszen az SQL szervert tartalmazó docker container a localhoston szolgáltat a windwos gépen amin vagyunk.
+
+Azonban, ha konténerbõl futtatjuk, akkor viszont a szerver neve nem localhost (ennek nincs élrtelme a docker konténeren BELÜL, hanem
+az SQL konténern ek a neve: sqlonlinuxondocker
+
+5. Ha van adatbázisunk, akkor tudjuk futtatni a másik (alkalmazás) konténerünket, összelinkelve az SQL szerverrel:
+
 docker run -it -p 1000:1000 --link sqlonlinuxondocker familyphotoswithidentity
 
+FIGYELEM:
+
+A docker file-ban még meg kell oldani az adatbázis automatikus létrehozását, ehhez 
+biztosan dotnet-sdk kell, mert abban van dotnet ef parancs.
+
+Illetve, futtatni kell linuxon a dotnet ef-et, ezt valószínüleg bash script-bõl kell.
+
+https://waterlan.home.xs4all.nl/dos2unix.html#DOS2UNIX
 
 
+#https://gist.github.com/remarkablemark/aacf14c29b3f01d6900d13137b21db3a#file-dockerfile
+
+# replace shell with bash so we can source files
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+
+# update the repository sources list
+# and install dependencies
+RUN apt-get update \
+    && apt-get install -y curl \
+    && apt-get -y autoclean
+
+# nvm environment variables
+ENV NVM_DIR /usr/local/nvm
+ENV NODE_VERSION 4.4.7
+
+# install nvm
+# https://github.com/creationix/nvm#install-script
+RUN curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
+
+# install node and npm
+RUN source $NVM_DIR/nvm.sh \
+    && nvm install $NODE_VERSION \
+    && nvm alias default $NODE_VERSION \
+    && nvm use default
+
+# add node and npm to path so the commands are available
+ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
+ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+
+#https://github.com/aspnet/aspnet-docker/blob/master/1.0/jessie/sdk/Dockerfile
 
 
-
-
+https://hahoangv.wordpress.com/2016/08/05/docker-for-net-developers-net-core-ef-core-and-postresql-in-docker/
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                serviceScope.ServiceProvider.GetService<ApplicationDbContext>().Database.Migrate();
+            }

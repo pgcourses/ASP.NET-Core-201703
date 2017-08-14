@@ -1,0 +1,15 @@
+﻿version: "3"
+services:
+    web:
+        build: .
+        ports:
+            - "1000:1000"
+        depends_on:
+            - mssql
+        environment:
+            - ConnectionStrings:DefaultConnection=Server=mssql;Database=FamilyPhotosWithIdentityDB;User Id=sa;Password=B1zt0nság;MultipleActiveResultSets=true;
+    mssql:
+        image: "microsoft/mssql-server-linux"
+        environment:
+            SA_PASSWORD: "B1zt0nság"
+            ACCEPT_EULA: "Y"
